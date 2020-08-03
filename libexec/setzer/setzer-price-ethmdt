@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+pair=ethmdt
+sources=(
+  uniswap_v2
+)
+
+case $1 in
+  uniswap_v2) {
+    setzer x-price "$1" ethmdt
+  };;
+
+  *) {
+#    export SETZER_MIN_MEDIAN=1
+#    setzer --price-commands "-$1-" $pair "${sources[@]}"
+    setzer x-price uniswap_v2 ethmdt
+  };;
+esac

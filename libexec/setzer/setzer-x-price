@@ -88,6 +88,11 @@ case $src in
     json=$(curl -sS "https://api.upbit.com/v1/ticker?markets=${quote^^}-${base^^}")
     setzer --format "$(jshon <<<"$json" -e 0 -e trade_price)"
   };;
+  uniswap_v2) {
+    json=$(curl -sS "http://104.248.88.76:8888/uniswap/v2/price?first_token=${quote^^}&second_token=${base^^}")
+#    json=$(curl -sS "http://104.248.88.76:8888/uniswap/v2/price?first_token=MDT&second_token=ETH")
+    setzer --format "$(jshon <<<"$json" -e result)"
+  };;
   exmo) {
     json=$(curl -sS 'https://api.exmo.com/v1.1/ticker')
     amount=$(jshon <<<"$json" -e "${base^^}_${quote^^}" -e avg)
