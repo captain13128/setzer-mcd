@@ -90,7 +90,6 @@ case $src in
   };;
   uniswap_v2) {
     json=$(curl -sS "http://104.248.88.76:8888/uniswap/v2/price?first_token=${quote^^}&second_token=${base^^}")
-#    json=$(curl -sS "http://104.248.88.76:8888/uniswap/v2/price?first_token=MDT&second_token=ETH")
     setzer --format "$(jshon <<<"$json" -e result)"
   };;
   exmo) {
