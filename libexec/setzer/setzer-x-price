@@ -89,8 +89,9 @@ case $src in
     setzer --format "$(jshon <<<"$json" -e 0 -e trade_price)"
   };;
   uniswap_v2) {
-    json=$(curl -sS "https://price.monolithos.pro/uniswap/v2/price?first_token=${quote^^}&second_token=${base^^}&with_decimals=true")
-    setzer --format "$(jshon <<<"$json" -e result)"
+    json=$(curl -sS "https://price.monolithos.pro/uniswap/v2/price?first_token=${quote^^}&second_token=${base^^}&with_decimals=true&round=10")
+    setzer --format "$(jshon <<<"$json" -e result | bc)"
+    # echo "$(jshon <<<"$json" -e result)" | bc
   };;
   exmo) {
     json=$(curl -sS 'https://api.exmo.com/v1.1/ticker')
