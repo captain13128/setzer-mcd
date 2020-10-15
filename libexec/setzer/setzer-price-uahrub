@@ -8,11 +8,14 @@ sources=(
 
 case $1 in
   privatbank_ua) {
-    setzer x-price "$1" uahrub
-  };;
-  cbr ) {
+#    setzer x-price "$1" uahrub
     price=$(setzer x-price "$1" uahrub)
     setzer --format "$(bc -l <<<"1 / $price")"
+  };;
+  cbr ) {
+#    price=$(setzer x-price "$1" uahrub)
+#    setzer --format "$(bc -l <<<"1 / $price")"
+    setzer x-price "$1" uahrub
   };;
   *) {
     export SETZER_MIN_MEDIAN=2
