@@ -2,23 +2,20 @@
 set -e
 pair=mdtmcr
 sources=(
-  cryptocompare
-  binance
-  bitstamp
-  coinbase
-  gemini
-  exmo
+  uniswap_v2
 )
 
-
 case $1 in
-  binance|cryptocompare|exmo) {
-    echo 100.0000000000
-  };;
-  bitstamp|coinbase|gemini) {
-    echo 100.0000000000
+  uniswap_v2) {
+    eth_mdt=$(setzer price ethmdt "$1")
+    eth_rub=$(setzer price ethrub)
+    setzer --format "$(bc -l <<<"$eth_rub / $eth_mdt")"
   };;
   *) {
-    setzer --price-commands "-$1-" $pair "${sources[@]}"
+#    export SETZER_MIN_MEDIAN=2
+#    setzer --price-commands "-$1-" $pair "${sources[@]}"
+    eth_mdt=$(setzer price ethmdt "$1")
+    eth_rub=$(setzer price ethrub)
+    setzer --format "$(bc -l <<<"$eth_rub / $eth_mdt")"
   };;
 esac

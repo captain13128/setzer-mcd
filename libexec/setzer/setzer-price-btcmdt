@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-pair=mdtrub
+pair=btcmdt
 sources=(
   uniswap_v2
 )
@@ -8,14 +8,15 @@ sources=(
 case $1 in
   uniswap_v2) {
     eth_mdt=$(setzer price ethmdt "$1")
-    eth_rub=$(setzer price ethrub)
-    setzer --format "$(bc -l <<<"$eth_rub / $eth_mdt")"
+    eth_btc=$(setzer price ethbtc)
+    setzer --format "$(bc -l <<<"$eth_mdt / $eth_btc")"
   };;
   *) {
 #    export SETZER_MIN_MEDIAN=2
 #    setzer --price-commands "-$1-" $pair "${sources[@]}"
     eth_mdt=$(setzer price ethmdt "$1")
-    eth_rub=$(setzer price ethrub)
-    setzer --format "$(bc -l <<<"$eth_rub / $eth_mdt")"
+    eth_btc=$(setzer price ethbtc)
+    setzer --format "$(bc -l <<<"$eth_mdt / $eth_btc")"
   };;
 esac
+

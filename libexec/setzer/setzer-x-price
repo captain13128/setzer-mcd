@@ -95,8 +95,8 @@ case $src in
   };;
   exmo) {
     json=$(curl -sS 'https://api.exmo.com/v1.1/ticker')
-    amount=$(jshon <<<"$json" -e "${base^^}_${quote^^}" -e avg)
-    setzer --format "${amount//'"'}"
+    amount=$(jshon <<<"$json" -e "${base^^}_${quote^^}" -e avg -u)
+    setzer --format "${amount}"
   };;
   exchangeratesapi) {
     json=$(curl -sS "https://api.exchangeratesapi.io/latest?base=${base^^}")
@@ -104,7 +104,13 @@ case $src in
   };;
   cbr) {
     json=$(curl -sS "https://www.cbr-xml-daily.ru/daily_json.js")
-    setzer --format "$(jshon <<<"$json" -e Valute -e "${base^^}" -e Value)"
+    price="$(jshon <<<"$json" -e Valute -e "${base^^}" -e Value)"
+    nominal="$(jshon <<<"$json" -e Valute -e "${base^^}" -e Nominal)"
+    setzer --format "$(bc -l <<<"$price / $nominal")"
+  };;
+  privatbank_ua) {
+    json=$(curl -sS "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
+    setzer --format $(jshon <<<"$json" -e 2 -e buy -u)
   };;
   ratesapi) {
     json=$(curl -sS "https://api.ratesapi.io/api/latest?base=${base^^}&symbols=${quote^^}&rtype=fpy")

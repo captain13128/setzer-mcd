@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+pair=mdtuah
+sources=(
+  cbr
+  privatbank_ua
+)
+
+case $1 in
+  cbr | privatbank_ua ) {
+    mdt_rub=$(setzer price mdtrub)
+    uah_rub=$(setzer price uahrub "$1")
+    setzer --format "$(bc -l <<<"$mdt_rub / $uah_rub")"
+  };;
+  *) {
+    export SETZER_MIN_MEDIAN=2
+    setzer --price-commands "-$1-" $pair "${sources[@]}"
+  };;
+esac

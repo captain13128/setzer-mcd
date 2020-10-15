@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+pair=uahrub
+sources=(
+  cbr
+  privatbank_ua
+)
+
+case $1 in
+  privatbank_ua) {
+    setzer x-price "$1" uahrub
+  };;
+  cbr ) {
+    price=$(setzer x-price "$1" uahrub)
+    setzer --format "$(bc -l <<<"1 / $price")"
+  };;
+  *) {
+    export SETZER_MIN_MEDIAN=2
+    setzer --price-commands "-$1-" $pair "${sources[@]}"
+  };;
+esac

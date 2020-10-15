@@ -1,0 +1,6 @@
+version: '3'
+services:
+  services:
+    build: .
+    container_name: setzer
+    restart: always
